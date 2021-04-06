@@ -1,4 +1,4 @@
-nano f2
+nano caseCorrection.sh
 echo "Enter a word"
 read var
  
@@ -9,4 +9,4 @@ read var2
  
 echo $var2 | tr '[A-Z]' '[a-z]'
 
-bash f2
+bash caseCorrection.sh
