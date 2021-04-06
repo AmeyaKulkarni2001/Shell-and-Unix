@@ -1,4 +1,4 @@
-nano f1
+nano calculator.sh
 echo "1 addition 2 Subtraction 3 multiplication 4 division"
 read var
 echo "Enter first number"
@@ -23,4 +23,4 @@ case $var in
    ;;
 esac
 
-bash f1
+bash calculator.sh
