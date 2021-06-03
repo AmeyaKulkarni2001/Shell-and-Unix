@@ -14,38 +14,34 @@ int r;
 
 void create()
 {
-    printf("\n///////////////////////////////////////////////////////////////////\n");
-	printf("\nEnter the total resource instances for each resource :- \n");
+	printf("\nEnter the total resource instances for each resource:");
 	for (int i=0; i<r; i++)
     {
-		printf("\nResource %d :- \t", i+1);
+		printf("\nResource %d : ", i+1);
 		scanf("%d", &available[i]);
 	}
-	printf("\n///////////////////////////////////////////////////////////////////\n");
-	printf("\nEnter the maximum number of resources for each process:- \n");
+	printf("\nEnter the maximum number of resources for each process:");
 	for (int i=0; i<n; i++)
 	{
-		printf("\n______Process %d____\n", i+1);
+		printf("\nProcess %d\n", i+1);
 		for (int j=0; j<r; j++)
 		{
-			printf("\nNumber of instance of resource %d it requires:\t", j+1);
+			printf("\nNumber of instance of resource %d it requires: ", j+1);
 			scanf("%d", &max[i][j]);
 		}
 	}
-	printf("\n///////////////////////////////////////////////////////////////////\n");
-	printf("\nEnter the resources allocated to each process :- \n");
+	printf("\nEnter the resources allocated to each process:");
 	for (int i=0; i<n; i++)
 	{
-		printf("\n______Process %d____\n", i+1);
+		printf("\nProcess %d\n", i+1);
 		for (int j=0; j<r; j++)
 		{
-			printf("\nInstance of resource %d allocated :- \t", j+1);
+			printf("\nInstance of resource %d allocated:", j+1);
 			scanf("%d", &allocated[i][j]);
 			need[i][j] = max[i][j] - allocated[i][j];
 			available[j] = available[j] - allocated[i][j];
 		}
 	}
-	printf("\n///////////////////////////////////////////////////////////////////\n");
 }
 
 bool is_safe()
@@ -91,47 +87,54 @@ bool is_safe()
 
 void display()
 {
+    printf("\n\tALLOCATED \n");
 	for(int i=0; i<n; i++)
     {
-		printf("\n\n_____Process %d____\n", i+1);
-		printf("\n\t\tALLOCATED \n");
 		for(int j=0; j<r; j++)
 		{
-			printf("\tR%d - %d", j+1, allocated[i][j]);
-			if (j != r-1) printf(", ");
+			printf("\t%d",allocated[i][j]);
 		}
-		printf("\n\t\tMAXIMUM \n");
-		for(int j=0; j<r; j++)
-		{
-			printf("\tR%d - %d", j+1, max[i][j]);
-			if (j != r-1) printf(", ");
-		}
-		printf("\n\t\tNEED\n");
-		for(int j=0; j<r; j++)
-		{
-			printf("\tR%d - %d", j+1, need[i][j]);
-			if (j != r-1) printf(", ");
-		}
-	}
-	printf("\n_________________\n");
-	printf("\n\t\tAVAILABLE\n");
-	for(int j=0; j<r; j++)
+		printf("\n");
+    }
+    printf("\n\tMAXIMUM \n");
+    for(int i=0;i<n;i++)
     {
-		printf("\tR%d - %d", j+1, available[j]);
-		if (j != r-1) printf(", ");
+        for(int j=0; j<r; j++)
+		{
+			printf("\t%d",max[i][j]);
+		}
+		printf("\n");
+    }
+    printf("\n\tNEED\n");
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0; j<r; j++)
+		{
+			printf("\t%d",need[i][j]);
+		}
+		printf("\n");
+        
+    }
+	printf("\n\tAVAILABLE\n");
+	for(int i=0;i<n;i++)
+	{
+	    for(int j=0; j<r; j++){
+		printf("\t%d", available[j]);
+	        
+	    }
+	   printf("\n");
 	}
-	printf("\n_________________\n");
 }
 
 void req_resource()
 {
 	int req[100] = {0};
 	int id;
-	printf("\nEnter the Process ID :- \n");
+	printf("\nEnter the Process ID:\n");
 	scanf("%d", &id);
 	for(int i=0; i<r; i++)
     {
-		printf("\nAdditional resource %d required :- \t", i+1);
+		printf("\nAdditional resource %d required:", i+1);
 		scanf("%d", &req[i]);
 		if(req[i] > need[id][i])
 		{
@@ -170,18 +173,17 @@ void req_resource()
 
 int main()
 {
-	printf("\nEnter the number of Processes :- \n");
+	printf("\nEnter the number of Processes:");
 	scanf("%d",&n);
-	printf("\nEnter the number of Resources :- \n");
+	printf("\nEnter the number of Resources:");
 	scanf("%d",&r);
 	int ch;
 	bool f;
 	do
     {
-		printf("\n************** MENU ***************\n");
+		printf("\nMENU");
 		printf("\n1. Create\n2. Display\n3. Request More Resources\n4. Check Safety\n5. Exit\n");
-        printf("\n*****************************\n");
-        printf("\nEnter your choice:- \n");
+        printf("\nEnter your choice:");
 		scanf("%d", &ch);
 
 		switch(ch)
@@ -194,6 +196,15 @@ int main()
 				break;
 			case 3:
 				req_resource();
+				printf("\nThe Safe Sequence is:\n");
+					for(int i=0; i<n; i++)
+					{
+						printf("P%d", safe[i]);
+						if(i == n-1)
+                            printf("\n");
+						else
+                            printf("\t->\t");
+					}
 				break;
 			case 4:
 				f = is_safe();
@@ -204,7 +215,7 @@ int main()
 				else
                 {
 					printf("%s\n", "System is in safe state\n");
-					printf("\nThe Safe Sequence is :- \n");
+					printf("\nThe Safe Sequence is:\n");
 					for(int i=0; i<n; i++)
 					{
 						printf("P%d", safe[i]);
@@ -218,7 +229,7 @@ int main()
 			case 5:
 				break;
 			default:
-				printf("\nWrong Choice.\n");
+				printf("\nWrong Choice\n");
 				break;
 		}
 	}while(ch!=5);
